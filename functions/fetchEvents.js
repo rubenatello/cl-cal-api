@@ -1,5 +1,5 @@
 exports.handler = async () => {
-    const API_URL = "https://api.planningcenteronline.com/calendar/v2/organizations/158647/events"; 
+    const API_URL = "https://api.planningcenteronline.com/calendar/v2/events"; 
     const API_KEY = process.env.PLANNING_CENTER_API_KEY; 
 
     try {
