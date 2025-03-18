@@ -1,10 +1,16 @@
+const fetch = require("node-fetch"); // Import node-fetch
+
 exports.handler = async () => {
     const API_URL = "https://api.planningcenteronline.com/calendar/v2/events"; 
     const API_KEY = process.env.PLANNING_CENTER_API_KEY; 
 
     try {
-        console.log("Fetching events from:", API_URL); // Log the request
-        console.log("Using API Key:", API_KEY ? "Exists" : "Not Found"); // Check if API key exists
+        console.log("Fetching events from:", API_URL);
+        console.log("Using API Key:", API_KEY ? "Exists" : "Not Found");
+
+        if (!API_KEY) {
+            throw new Error("Missing API Key. Ensure it's set in Netlify Environment Variables.");
+        }
 
         const response = await fetch(API_URL, {
             headers: { "Authorization": `Bearer ${API_KEY}` }
@@ -17,7 +23,7 @@ exports.handler = async () => {
         }
 
         const data = await response.json();
-        console.log("Received Data:", data); // Log received data
+        console.log("Received Data:", data);
 
         return {
             statusCode: 200,
