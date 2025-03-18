@@ -1,4 +1,5 @@
 import fetch from "node-fetch";
+import { Buffer } from "buffer";  // Ensure Buffer is available
 
 export async function handler() {
     const API_URL = "https://api.planningcenteronline.com/calendar/v2/events"; 
@@ -6,13 +7,11 @@ export async function handler() {
     const CLIENT_SECRET = process.env.PLANNING_CENTER_CLIENT_SECRET;
 
     try {
-        console.log("Fetching events from:", API_URL);
-        console.log("Using Client ID:", CLIENT_ID ? "Exists" : "Not Found");
-        console.log("Using Client Secret:", CLIENT_SECRET ? "Exists" : "Not Found");
-
         if (!CLIENT_ID || !CLIENT_SECRET) {
             throw new Error("Missing Client ID or Client Secret. Ensure they're set in Netlify Environment Variables.");
         }
+
+        console.log("Fetching events...");
 
         // Encode Client ID & Secret for Basic Auth
         const API_AUTH = Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString("base64");
@@ -26,22 +25,23 @@ export async function handler() {
 
         if (!response.ok) {
             const errorText = await response.text();
-            console.error("API Error Response:", errorText);
+            console.error("API Error:", errorText);
             throw new Error("Failed to fetch events - " + errorText);
         }
 
         const data = await response.json();
-        console.log("Received Data:", data);
 
         return {
             statusCode: 200,
-            body: JSON.stringify(data),
+            body: JSON.stringify(data, null, 2), // Pretty-print JSON
+            headers: { "Content-Type": "application/json" }
         };
     } catch (error) {
         console.error("Fetch Error:", error.message);
         return {
             statusCode: 500,
             body: JSON.stringify({ error: error.message }),
+            headers: { "Content-Type": "application/json" }
         };
     }
-};
+}
