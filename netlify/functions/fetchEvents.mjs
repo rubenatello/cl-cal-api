@@ -1,6 +1,6 @@
-const fetch = require("node-fetch"); // Import node-fetch
+import fetch from "node-fetch";
 
-exports.handler = async () => {
+export async function handler() {
     const API_URL = "https://api.planningcenteronline.com/calendar/v2/events"; 
     const API_KEY = process.env.PLANNING_CENTER_API_KEY; 
 
@@ -27,13 +27,13 @@ exports.handler = async () => {
 
         return {
             statusCode: 200,
-            body: JSON.stringify(data)
+            body: JSON.stringify(data),
         };
     } catch (error) {
         console.error("Fetch Error:", error.message);
         return {
             statusCode: 500,
-            body: JSON.stringify({ error: error.message })
+            body: JSON.stringify({ error: error.message }),
         };
     }
 };
