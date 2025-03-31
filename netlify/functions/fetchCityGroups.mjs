@@ -81,12 +81,19 @@ export async function handler() {
 
     return {
       statusCode: 200,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': 'Content-Type',
+      },
       body: JSON.stringify(cityGroupEvents, null, 2),
     };
   } catch (error) {
     console.error("Fetch Error:", error.message);
     return {
       statusCode: 500,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+      },
       body: JSON.stringify({ error: error.message }, null, 2),
     };
   }
