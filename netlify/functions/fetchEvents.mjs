@@ -1,7 +1,7 @@
 import fetch from "node-fetch";
 
 export async function handler() {
-  const API_URL = "https://api.planningcenteronline.com/calendar/v2/event_instances?filter=future&order=starts_at&include=event,event.tags";
+  const API_URL = "https://api.planningcenteronline.com/calendar/v2/event_instances?filter=future&order=starts_at&include=event,event.tags&per_page=100";
   const CLIENT_ID = process.env.PLANNING_CENTER_CLIENT_ID;
   const CLIENT_SECRET = process.env.PLANNING_CENTER_CLIENT_SECRET;
 
