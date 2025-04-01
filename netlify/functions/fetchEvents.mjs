@@ -47,8 +47,8 @@ export async function handler() {
 
     for (const instance of data.data || []) {
       const eventId = instance.relationships.event.data.id;
-      if (seenEventIds.has(eventId)) continue;
-      seenEventIds.add(eventId);
+      //if (seenEventIds.has(eventId)) continue;
+      //seenEventIds.add(eventId);
 
       const event = eventsById[eventId];
       if (!event) continue;
